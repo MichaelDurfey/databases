@@ -6,8 +6,10 @@ module.exports = {
       db.getAllMessages(callback); 
         
     }, // a function which produces all the messages
-    post: function (message) {
-      db.postAMessage (message);
+    post: function (message, room) {
+      // console.log(message, room, typeof message)
+      db.postAMessage (message, room);
+      console.log(message, room, typeof message);
     } // a function which can be used to insert a message into the database
   },
 

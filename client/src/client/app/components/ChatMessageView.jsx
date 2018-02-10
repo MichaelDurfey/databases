@@ -6,7 +6,8 @@ function ChatMessageView({ message }) {
   return (
     <div className="chat-message">
       <div className="username">{message.username}</div>
-      <div className="message-content">{message.text}</div>
+      <div className="message-content">{message.message}</div>
+      
     </div>
   );
 }
@@ -14,7 +15,7 @@ function ChatMessageView({ message }) {
 ChatMessageView.propTypes = {
   message: PropTypes.shape({
     username: PropTypes.string,
-    text: PropTypes.string,
+    message: PropTypes.string,
   }).isRequired,
 };
 

@@ -7,7 +7,6 @@ import UserNameInputView from './components/UserNameInputView';
 import UserInputView from './components/UserInputView';
 import RoomSearchView from './components/RoomSearchView';
 import ChatContainerView from './components/ChatContainerView';
-import PARSE_API from './parse_config';
 
 
 class App extends React.Component {
@@ -24,10 +23,11 @@ class App extends React.Component {
     this.handleRoomSelect = this.handleRoomSelect.bind(this);
     this.updateMessages = this.updateMessages.bind(this);
     this.postUserMessage = this.postUserMessage.bind(this);
+    this.getUserMessages = this.getUserMessages.bind(this);
   }
 
   componentDidMount() {
-    // this.getUserMessages(this.updateMessages);
+    this.getUserMessages(this.updateMessages);
     // setInterval(() => this.getUserMessages(this.updateMessages), 4000);
   }
 
@@ -37,12 +37,14 @@ class App extends React.Component {
   }
   */
   getUserMessages(callBack) {
+    var that = this;
     $.ajax({
       type: 'GET',
-      headers: PARSE_API,
-      url: 'http://parse.sfs.hackreactor.com/chatterbox/classes/messages',
-      data: 'order=-createdAt&limit=100',
+      headers: '{ContentType: application/json}',
+      url: '/classes/messages',
       success(data) {
+        data = JSON.parse(data);
+        that.setState({messages: data});
         callBack(data);
       },
       error(data) {
@@ -66,13 +68,12 @@ class App extends React.Component {
   postUserMessage() {
     const message = {
       username: this.state.username,
-      text: this.state.userInput,
+      message: this.state.userInput,
       roomname: this.state.currentRoom,
     };
     $.ajax({
       type: 'POST',
-      headers: PARSE_API,
-      url: 'http://parse.sfs.hackreactor.com/chatterbox/classes/messages',
+      url: '/classes/messages',
       data: JSON.stringify(message),
       contentType: 'application/json',
       success() {
@@ -84,7 +85,7 @@ class App extends React.Component {
   }
 
   updateMessages(data) {
-    this.setState({ messages: data.results });
+    // this.setState({ messages: data});
   }
 
 
@@ -109,7 +110,6 @@ class App extends React.Component {
           <h1 className="chatViewHeader">Chat View</h1>
             <ChatContainerView
               messages={this.state.messages}
-              room={this.state.currentRoom}
             />
         </div>
       </div>

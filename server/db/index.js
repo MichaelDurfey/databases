@@ -34,16 +34,16 @@ getAllUsers = function(callback) {
   });
 };
 
-postAMessage = function(message) {
-  var QueryMessage = 'INSERT into messages (message) VALUES (?);';
-  connection.query(QueryMessage, message, function(err, data) {
+postAMessage = function(message, roomname) {
+  var QueryMessage = 'INSERT into messages (message, roomname) VALUES (?, ?);';
+  connection.query(QueryMessage, [message, roomname], function(err, data) {
     if (err) { throw err; }
     console.log(data);
   });
 };
 
 postAUser = function(user) {
-  console.log(user);
+  console.log('new user' , user);
   var newUser = 'INSERT into users (username) VALUES (?);';
   connection.query(newUser, user, function(err, data) {
     if (err) { throw err; }
