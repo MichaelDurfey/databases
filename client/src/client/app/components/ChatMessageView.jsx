@@ -7,7 +7,6 @@ function ChatMessageView({ message }) {
     <div className="chat-message">
       <div className="username">{message.username}</div>
       <div className="message-content">{message.message}</div>
-      
     </div>
   );
 }

@@ -15,9 +15,10 @@ CREATE TABLE messages(
 DROP TABLE IF EXISTS users;
 CREATE TABLE users(
   /* Describe your table here.*/
-  id int NOT NULL AUTO_INCREMENT, 
+  id int NOT NULL, 
   username varchar(300) NOT NULL, 
-  PRIMARY KEY (ID)
+  messageid int NOT NULL,
+  FOREIGN KEY (messageid) REFERENCES messages(id)
 );
 
 /* Create other tables and define schemas for them here! */

@@ -23,12 +23,11 @@ class App extends React.Component {
     this.handleRoomSelect = this.handleRoomSelect.bind(this);
     this.updateMessages = this.updateMessages.bind(this);
     this.postUserMessage = this.postUserMessage.bind(this);
-    this.getUserMessages = this.getUserMessages.bind(this);
   }
 
   componentDidMount() {
     this.getUserMessages(this.updateMessages);
-    // setInterval(() => this.getUserMessages(this.updateMessages), 4000);
+    setInterval(() => this.getUserMessages(this.updateMessages), 4000);
   }
 
   /*
@@ -37,14 +36,12 @@ class App extends React.Component {
   }
   */
   getUserMessages(callBack) {
-    var that = this;
     $.ajax({
       type: 'GET',
-      headers: '{ContentType: application/json}',
+      ContentType: 'application/json',
       url: '/classes/messages',
       success(data) {
         data = JSON.parse(data);
-        that.setState({messages: data});
         callBack(data);
       },
       error(data) {
@@ -74,8 +71,8 @@ class App extends React.Component {
     $.ajax({
       type: 'POST',
       url: '/classes/messages',
+      headers: { 'Content-Type': 'application/json' },
       data: JSON.stringify(message),
-      contentType: 'application/json',
       success() {
       },
       error(data) {
@@ -85,7 +82,7 @@ class App extends React.Component {
   }
 
   updateMessages(data) {
-    // this.setState({ messages: data});
+    this.setState({ messages: data });
   }
 
 

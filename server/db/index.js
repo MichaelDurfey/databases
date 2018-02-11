@@ -17,7 +17,7 @@ connection.connect();
 
 
 getAllMessages = function(callback) {
-  var queryStringGetAllMessages = 'SELECT * FROM messages;';
+  var queryStringGetAllMessages = 'SELECT * FROM messages INNER JOIN users ON messages.id = users.id ';
   connection.query(queryStringGetAllMessages, function(err, data) {
     if (err) { throw err; }
     console.log('get all messages', data);
@@ -36,6 +36,7 @@ getAllUsers = function(callback) {
 
 postAMessage = function(message, roomname) {
   var QueryMessage = 'INSERT into messages (message, roomname) VALUES (?, ?);';
+  console.log("heres the message! query" ,message);
   connection.query(QueryMessage, [message, roomname], function(err, data) {
     if (err) { throw err; }
     console.log(data);
